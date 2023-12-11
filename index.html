@@ -11,26 +11,126 @@
 
 <body>
     <div class="container-sm">
+        <nav class="navbar navbar-expand-sm bg-body-tertiary row">
+            <div class="container-fluid col-8">
+              
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Alumnos
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalAgregarAlumno">Agregar</a></li>
+                      <li><a class="dropdown-item" href="#" id="verListaAlumnos">Ver lista de alumnos</a></li>
+                      
+                    </ul>
+                    
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Materia
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalAgregarMateria">Agregar</a></li>
+                      <li><a class="dropdown-item" href="#" id="verListaMateria">Ver lista de materias</a></li>
+                      
+                    </ul>
+                    
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Grupos
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#" id="agregarGrupo">Agregar</a></li>
+                      <li><a class="dropdown-item" href="#">Ver lista grupos</a></li>
+                      
+                    </ul>
+                    
+                  </li>
+                </ul>
+                
+              </div>
+            </div>
+          </nav>
         <div class="row justify-content-center align-items-center">
-            <div class="col-6">
-                <nav class="navbar bg-primary-subtle">
-                    <div class="container-fluid">
-                        <a href="#" class="navbar-brand">Agregar Alumno</a>
-                        <a href="#" class="navbar-brand">Agregar Materia</a>
-                        <a href="#" class="navbar-brand">prueba</a>
-                        <a href="#" class="navbar-brand">prueba</a>
-                    </div>
-                </nav>
+            <div class="col-8" id="tablasDatos">
+
             </div>
         </div>
-        
     </div>
 
-
+    <!-- Zona de moales -->
+    <!-- modal agregarAlumno -->
+    <div id="modalAgregarAlumno" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar alumno</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="staticEmail" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="nombreAlumno">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="apellidosAlumno" class="col-sm-2 col-form-label">Apellidos</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="apellidosAlumno">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="edadAlumno" class="col-sm-2 col-form-label">Edad</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="edadAlumno">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnAgregarAlumno">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   <!--  fin modal agregar Alumno -->
+   <!-- inicio modal agregar materia -->
+   <div id="modalAgregarMateria" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel2"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Agregar Materia</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="nombreMateria" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="nombreMateria">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnAgregarMateria">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fin modal agregar materia -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="./app/appv2.js"></script>
+    <script src="./app/bd.js"></script>
+    <script src="./app/app.js"></script>
 </body>
 
 </html>

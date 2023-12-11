@@ -58,11 +58,13 @@ class ManejadorBD {
         let alumnoMaterias = [];
         this.baseDatos.tablaAlumnoMateria.forEach(element => {
             if (element.idAlumno == idAlumno) {
+                let alumno = this.baseDatos.tablaAlumnos.get(element.idAlumno);
+                let materia = this.baseDatos.tablaMaterias.get(element.idMateria);
                 alumnoMaterias.push({
-                    nombre: this.baseDatos.tablaAlumnos.get(idAlumno).nombre,
-                    apellidos: this.baseDatos.tablaAlumnos.get(idAlumno).edad,
-                    edad: this.baseDatos.tablaAlumnos.get(idAlumno).edad,
-                    materia: this.baseDatos.tablaMaterias.get(element.idMateria).nombre,
+                    nombre: alumno.nombre,
+                    apellidos: alumno.edad,
+                    edad: alumno.edad,
+                    materia: materia.nombre,
                     calificacion: element.calificacion
                 });
             }
@@ -101,7 +103,7 @@ class Validador {
         return true;
     }
 }
-
+/* 
 let controladorBD = new ManejadorBD();
 let alumno = new Alumno("joe", "alor", 37);
 
@@ -125,7 +127,7 @@ console.log(controladorBD.baseDatos.tablaMaterias);
 console.log(controladorBD.baseDatos.tablaAlumnos);
 console.log(controladorBD.baseDatos.tablaAlumnoMateria);
 
-console.log(controladorBD.consultarAlumnoMateria(1));
+console.log(controladorBD.consultarAlumnoMateria(1)); */
 
 /* let botonagregar = document.querySelector("#btnAgregar");
 

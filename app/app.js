@@ -1,98 +1,99 @@
-let tablaAlumnos = [];
-let tablaMaterias = [];
-let tablaGrupos = [];
-let tablaMateriasAlumnos = [];
-class Alumno{
-    constructor(nombre,apellidos,edad){
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.edad = edad;
-        
+if(localStorage.getItem("proyectoBD")){
+  
+}
+
+let controladorBD = new ManejadorBD();
+
+document.addEventListener("DOMContentLoaded", cargarTablaAlumnos);
+
+function cargarTablaAlumnos() {
+  let tablaAlumno = controladorBD.baseDatos.tablaAlumnos;
+  let tablaContenedor = document.querySelector("#tablasDatos");
+  let tablaAlumnohtml = `<table class="table table table-striped table-hover">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Edad</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    `;
+  tablaAlumno.forEach((alumno) => {
+    tablaAlumnohtml += `<tr>
+            <td>${alumno.id}</td>
+            <td>${alumno.nombre}</td>
+            <td>${alumno.apellidos}</td>
+            <td>${alumno.edad}</td>
+            <td>
+              <div class=class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                <button type="button" class="btn btn-success">Editar</button>
+                <button type="button" class="btn btn-primary">Materias</button>
+                <button type="button" class="btn btn-danger">elimniar</button>
+              </div>
+            </td>
+        </tr>`;
+  });
+  tablaAlumnohtml += `</tbody></table>`;
+  tablaContenedor.innerHTML = tablaAlumnohtml;
+}
+function cargarTablaMaterias(){
+  let tablaMateria = controladorBD.baseDatos.tablaMaterias;
+  let tablaContenedor = document.querySelector("#tablasDatos");
+  let tablaMateriahtml = `<table class="table table table-striped table-hover">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>   
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    `;
+  tablaMateria.forEach((materia) => {
+    tablaMateriahtml += `<tr>
+            <td>${materia.id}</td>
+            <td>${materia.nombre}</td>
+            <td>
+              <div class=class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                <button type="button" class="btn btn-success">Editar</button>
+                <button type="button" class="btn btn-danger">elimniar</button>
+              </div>
+            </td>
+        </tr>`;
+  });
+  tablaMateriahtml += `</tbody></table>`;
+  tablaContenedor.innerHTML = tablaMateriahtml;
+}
+$("body").addEventListener("click", (e) => {
+    if (e.target.id == "btnAgregarAlumno") {
+      let alumno = new Alumno($("#nombreAlumno").value, $("#apellidosAlumno").value, $("#edadAlumno").value)
+      controladorBD.agregarAlumno(alumno);
+      cargarTablaAlumnos();
+      const modal = $('#modalAgregarAlumno');
+      const intaciaModal =  bootstrap.Modal.getInstance(modal);
+      intaciaModal.hide();
     }
-}
-
-class MateriasAlumnos{
-    constructor(idAlumno,idMateria,calificacion){
-
-        this.idAlumno = idAlumno;
-        this.idMateria = idMateria;
-        this.calificacion = calificacion;
+    if(e.target.id == "verListaAlumnos"){
+      cargarTablaAlumnos();
     }
-}
-
-class Materia{
-    constructor(materia){
-        this.materia = materia;
+    if(e.target.id == "verListaMateria"){
+      cargarTablaMaterias();
     }
-}
-
-class Grupo{
-    constructor(nombre){
-        this.nombre  = nombre;
-        this.alumnos = [];
+    if(e.target.id=="btnAgregarMateria"){
+      let materia = new Materia($("#nombreMateria").value);
+      controladorBD.agregarMateria(materia);
+      cargarTablaMaterias();
+      const modal = $('#modalAgregarMateria');
+      const intaciaModal =  bootstrap.Modal.getInstance(modal);
+      intaciaModal.hide();
     }
+    if(e.target.id=="agregarGrupo"){
+      
+    }
+});
+function $(selector) {
+  return document.querySelector(selector);
 }
-
-function agregarAlumno(alumno){
-    alumno.id = tablaAlumnos.length;
-    tablaAlumnos.push(alumno);
-}
-function obtnerAlumno(id){
-    return tablaAlumnos[id];
-}
-
-function agregarMateria(materia){
-    materia.id = tablaMaterias.length;
-    tablaMaterias.push(materia);
-}
-function agregarMateriaAlumnos(materiaAlumnos){
-    materiaAlumnos.id = tablaMateriasAlumnos.length;
-    tablaMateriasAlumnos.push(materiaAlumnos);
-}
-
-function imprimirAlumnosMaterias(){
-    tablaMateriasAlumnos.forEach(materiaAlumno =>{
-        console.log(`
-        nombre: ${tablaAlumnos[materiaAlumno.idAlumno].nombre} ${tablaAlumnos[materiaAlumno.idAlumno].apellidos} 
-        Materia: ${tablaMaterias[materiaAlumno.idMateria].materia} 
-        calificacion: ${materiaAlumno.calificacion}`);
-    })
-}
-let alumno = new Alumno("joel","alor",37);
-let alumno2 = new Alumno("vale","xxxx",25);
-let alumno3 = new Alumno("mali","yyy",22);
-
-agregarAlumno(alumno);
-agregarAlumno(alumno2);
-agregarAlumno(alumno3);
-
-let materia1 = new Materia("matematicas");
-let materia2 = new Materia("fisica");
-let materia3 = new Materia("español");
-let materia4 = new Materia("ingles");
-
-agregarMateria(materia1);
-agregarMateria(materia2);
-agregarMateria(materia3);
-agregarMateria(materia4);
-
-let materiaAlumno1 = new MateriasAlumnos(0,1,7);
-let materiaAlumno2 = new MateriasAlumnos(0,0,8);
-let materiaAlumno3 = new MateriasAlumnos(0,2,8.8);
-
-agregarMateriaAlumnos(materiaAlumno1);
-agregarMateriaAlumnos(materiaAlumno2);
-agregarMateriaAlumnos(materiaAlumno3);
-agregarMateriaAlumnos(new MateriasAlumnos(1,1,8.5));
-agregarMateriaAlumnos(new MateriasAlumnos(1,3,8.5));
-agregarMateriaAlumnos(new MateriasAlumnos(1,0,8.5));
-
-/* console.log(tablaAlumnos);
-
-console.log(obtnerAlumno(2))
-
-console.log(tablaMaterias);
-
-console.log(tablaMateriasAlumnos); */ 
-
-imprimirAlumnosMaterias()
