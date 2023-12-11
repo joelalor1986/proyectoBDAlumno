@@ -40,11 +40,21 @@ class ManejadorBD {
         }
 
     }
+    eliminarAlumno(id){
+        if(this.baseDatos.tablaAlumnos.get(id)){
+            this.baseDatos.tablaAlumnos.delete(id);
+        }
+    }
     agregarMateria(materia) {
         if (this.validador.validarMateria(materia)) {
             materia.id = this.baseDatos.keyMateria;
             this.baseDatos.tablaMaterias.set(materia.id, materia)
             this.baseDatos.keyMateria++;
+        }
+    }
+    eliminarMateria(id){
+        if(this.baseDatos.tablaMaterias.get(id)){
+            this.baseDatos.tablaMaterias.delete(id)
         }
     }
     agregarAlumnoMateria(alumnoMateria) {
@@ -76,6 +86,9 @@ class ManejadorBD {
 
         }
     }
+    guardarBD() {
+        console.log(JSON.parse(localStorage("proyectoBD")))
+    }
 }
 class BaseDatos {
     constructor() {
@@ -103,6 +116,7 @@ class Validador {
         return true;
     }
 }
+
 /* 
 let controladorBD = new ManejadorBD();
 let alumno = new Alumno("joe", "alor", 37);
