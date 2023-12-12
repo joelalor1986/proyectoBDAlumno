@@ -40,8 +40,8 @@ class ManejadorBD {
         }
 
     }
-    eliminarAlumno(id){
-        if(this.baseDatos.tablaAlumnos.get(id)){
+    eliminarAlumno(id) {
+        if (this.baseDatos.tablaAlumnos.get(id)) {
             this.baseDatos.tablaAlumnos.delete(id);
         }
     }
@@ -52,8 +52,8 @@ class ManejadorBD {
             this.baseDatos.keyMateria++;
         }
     }
-    eliminarMateria(id){
-        if(this.baseDatos.tablaMaterias.get(id)){
+    eliminarMateria(id) {
+        if (this.baseDatos.tablaMaterias.get(id)) {
             this.baseDatos.tablaMaterias.delete(id)
         }
     }
@@ -66,19 +66,23 @@ class ManejadorBD {
     }
     consultarAlumnoMateria(idAlumno) {
         let alumnoMaterias = [];
+        /* console.log(this.baseDatos.tablaAlumnos.get(idAlumno)); */
         this.baseDatos.tablaAlumnoMateria.forEach(element => {
             if (element.idAlumno == idAlumno) {
-                let alumno = this.baseDatos.tablaAlumnos.get(element.idAlumno);
+                //debugger
+                let alumno = this.baseDatos.tablaAlumnos.get(idAlumno);               
                 let materia = this.baseDatos.tablaMaterias.get(element.idMateria);
+               
                 alumnoMaterias.push({
                     nombre: alumno.nombre,
-                    apellidos: alumno.edad,
-                    edad: alumno.edad,
-                    materia: materia.nombre,
+                    apellidos: alumno.apellidos,
+                    edad: alumno.edad, 
+                    materia: materia.nombre,  
                     calificacion: element.calificacion
                 });
             }
         });
+        
         return alumnoMaterias;
     }
     agregarGrupo(grupo) {
