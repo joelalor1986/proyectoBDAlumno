@@ -25,7 +25,8 @@
                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                         data-bs-target="#modalAgregarAlumno">Agregar</a></li>
                                 <li><a class="dropdown-item" href="#" id="verListaAlumnos">Ver lista de alumnos</a></li>
-
+                                <li><a class="dropdown-item" href="#" id="buscarAlumnos" data-bs-toggle="modal"
+                                        data-bs-target="#modalBuscarAlumno">Buscar</a></li>
                             </ul>
 
                         </li>
@@ -186,7 +187,42 @@
         </div>
     </div>
     <!--  fin modal lista de alumnos materias -->
-   
+    <!-- inicio modal buscar -->
+    <div id="modalBuscarAlumno" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel2"
+        aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Buscar alumno</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtBuscarAlumno">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        
+                        <div class="col-sm-10">
+                            <select name="" id="selectBuscar" class="form-select">
+                                <option value="nombre">Nombre</option>
+                                <option value="apellidos">Apellidos</option>
+                                <option value="edad">Edad</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="button" class="btn btn-primary" id="btnBuscarAlumno">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fin modal buscar -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
