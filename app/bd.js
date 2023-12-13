@@ -93,7 +93,9 @@ class ManejadorBD {
     }
     agregarGrupo(grupo) {
         if (this.validador(grupo)) {
-
+            grupo.id = this.baseDatos.keyGrupos;
+            this.baseDatos.tablaGrupos.set(grupo.id,grupo);
+            this.baseDatos.keyGrupos++;
         }
     }
     guardarBD() {
