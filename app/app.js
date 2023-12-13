@@ -324,3 +324,21 @@ function cargarTablaAlumnos2(alumnos) {
     //console.log(tablaAlumnohtml)
     tablaContenedor.innerHTML = tablaAlumnohtml;
 }
+function construirTablaObjetosHTML(elementos,nombreColumnas){
+    let tabla = document.createElement("table");
+    tabla.classList.add("table","table-striped", "table-hover");
+    let encabezado = document.createElement("thead");
+    let titulosColumnas = document.createElement("tr");
+    nombreColumnas.forEach(e=>{
+        let th = document.createElement("th");
+        th.textContent = e;
+        titulosColumnas.appendChild(th);
+    })
+    encabezado.appendChild(titulosColumnas);
+    let tbody = document.createElement("tbody");
+    elementos.forEach(e=>{
+        let tr = document.createElement("tr");
+        
+    })
+    
+}
