@@ -35,7 +35,7 @@ function guardarBDNavegador() {
     };
     console.log(controladorBD.baseDatos)
     console.log(bdGuardar);
-  //  debugger
+    //debugger
     localStorage.setItem(bd, JSON.stringify(bdGuardar));
 }
 function cargarTablaAlumnos() {
@@ -81,8 +81,11 @@ function cargarTablaAlumnos() {
               </div>
             </td>
         </tr>`;
+        //debugger
+        //console.log(tablaAlumnohtml);
     });
     tablaAlumnohtml += `</tbody></table>`;
+    //console.log(tablaAlumnohtml)
     tablaContenedor.innerHTML = tablaAlumnohtml;
 }
 function cargarTablaMaterias() {
@@ -140,7 +143,7 @@ function cargarTablaMateriasAlumno(idAlumno) {
         
         `
     })
-    tablaAlumnohtml +=`<tr class="table-warning"><td>Promedio</td><td>${promedio}</td></tr></tbody></table>`;
+    tablaAlumnohtml +=`<tr class="table-warning"><td>Promedio</td><td>${promedio? promedio:"No tienes materias asignadas"}</td></tr></tbody></table>`;
     $("#listaMaterias").innerHTML = tablaAlumnohtml;
     let modal = new bootstrap.Modal("#modalListaMateriaAlumno");
     modal.show();
@@ -165,12 +168,17 @@ function eliminarMateria(id) {
     cargarTablaMaterias();
 }
 $("body").addEventListener("click", (e) => {
+    
+    if (e.target.id == "agregarGrupo"){
+        
+        mostrarArr();
+    }
     if (e.target.id == "btnAgregarAlumno") {
-        let alumno = new Alumno(
-            $("#nombreAlumno").value,
-            $("#apellidosAlumno").value,
-            $("#edadAlumno").value
-        );
+       // debugger
+        let nombre = $("#nombreAlumno").value;
+        let apellidos = $("#apellidosAlumno").value;
+        let edad = $("#edadAlumno").value;
+        let alumno = new Alumno(nombre,apellidos,edad)       ;
         controladorBD.agregarAlumno(alumno);
         cargarTablaAlumnos();
         const modal = $("#modalAgregarAlumno");
@@ -214,4 +222,16 @@ function limpiarCamposAltaAlumno() {
 }
 function $(selector) {
     return document.querySelector(selector);
+}
+
+let arr = [1,5,65,8,8]
+
+function mostrarArr(){
+    let  html = `<table class="table"><thead><tr><th>valores</th></thead>`;
+    for(let i = 0; i<arr.length;i++ ){
+        html+=`<tr><td>${arr[i]}</td></tr>`
+    }
+    html += `</table>`
+    console.log(html);
+    $("#tablasDatos").innerHTML = html;
 }

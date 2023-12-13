@@ -43,6 +43,12 @@ class ManejadorBD {
     eliminarAlumno(id) {
         if (this.baseDatos.tablaAlumnos.get(id)) {
             this.baseDatos.tablaAlumnos.delete(id);
+            this.baseDatos.tablaAlumnoMateria.forEach((valor,clave) =>{
+                if(valor.idAlumno == id){
+                    //console.log(valor)
+                    this.baseDatos.tablaAlumnoMateria.delete(clave)
+                }
+            })
         }
     }
     agregarMateria(materia) {
