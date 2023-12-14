@@ -2,7 +2,7 @@ let controladorBD = new ManejadorBD();
 const bd = "proyectoBD";
 if (localStorage.getItem(bd) != null) {
     //debugger
-     let bdRecuperada = JSON.parse(localStorage.getItem(bd));
+    let bdRecuperada = JSON.parse(localStorage.getItem(bd));
     console.log(bdRecuperada);
     controladorBD.baseDatos.keyAlumno = bdRecuperada.keyAlumnos;
     controladorBD.baseDatos.keyMateria = bdRecuperada.keyMaterias;
@@ -11,7 +11,7 @@ if (localStorage.getItem(bd) != null) {
     controladorBD.baseDatos.tablaAlumnos = new Map(bdRecuperada.tablaAlumnos);
     controladorBD.baseDatos.tablaMaterias = new Map(bdRecuperada.tablaMaterias);
     controladorBD.baseDatos.tablaAlumnoMateria = new Map(bdRecuperada.tablaAlumnoMaterias);
-    controladorBD.baseDatos.tablaGrupos = new Map(bdRecuperada.tablaGrupos); 
+    controladorBD.baseDatos.tablaGrupos = new Map(bdRecuperada.tablaGrupos);
 }
 
 document.addEventListener("DOMContentLoaded", cargarTablaAlumnos);
@@ -123,7 +123,7 @@ function cargarTablaMaterias() {
 }
 function cargarTablaMateriasAlumno(idAlumno) {
     let alumnoMaterias = controladorBD.consultarAlumnoMateria(idAlumno);
-    let promedio = alumnoMaterias.reduce((suma,calificacion)=> suma + calificacion.calificacion,0)/alumnoMaterias.length;
+    let promedio = alumnoMaterias.reduce((suma, calificacion) => suma + calificacion.calificacion, 0) / alumnoMaterias.length;
     let tablaAlumnohtml = `<table class="table table table-striped table-hover">
     
     <thead>
@@ -134,8 +134,8 @@ function cargarTablaMateriasAlumno(idAlumno) {
   </thead>
   <tbody>
     `;
-    alumnoMaterias.forEach(materia =>{
-        tablaAlumnohtml+= `
+    alumnoMaterias.forEach(materia => {
+        tablaAlumnohtml += `
         <tr>
             <td>${materia.materia}</td>
             <td>${materia.calificacion}</td>
@@ -143,17 +143,26 @@ function cargarTablaMateriasAlumno(idAlumno) {
         
         `
     })
-    tablaAlumnohtml +=`<tr class="table-warning"><td>Promedio</td><td>${promedio? promedio:"No tienes materias asignadas"}</td></tr></tbody></table>`;
+    tablaAlumnohtml += `<tr class="table-warning"><td>Promedio</td><td>${promedio ? promedio : "No tienes materias asignadas"}</td></tr></tbody></table>`;
     $("#listaMaterias").innerHTML = tablaAlumnohtml;
     let modal = new bootstrap.Modal("#modalListaMateriaAlumno");
     modal.show();
-    
+
 }
 function agregarMateriaAlumno(idAlumno) {
     let modal = new bootstrap.Modal("#modalAgregarMateriaAlumno");
     let materiasOption = "";
     controladorBD.baseDatos.tablaMaterias.forEach(materia => {
-        materiasOption += `<option value=${materia.id}>${materia.nombre}</option>`
+        let materiAgregada = false;
+        controladorBD.baseDatos.tablaAlumnoMateria.forEach(alumnoMateria => {
+            if (idAlumno == alumnoMateria.idAlumno && materia.id == alumnoMateria.idMateria) {
+                materiAgregada = true;
+            }
+        });
+        if (!materiAgregada){
+            materiasOption += `<option value=${materia.id}>${materia.nombre}</option>`
+        }
+            
     })
     $("#selectMaterias").innerHTML = materiasOption;
     $("#idUsuarioAgregarMateria").value = idAlumno;
@@ -168,24 +177,24 @@ function eliminarMateria(id) {
     cargarTablaMaterias();
 }
 $("body").addEventListener("click", (e) => {
-    if (e.target.id == "btnBuscarAlumno"){
+    if (e.target.id == "btnBuscarAlumno") {
         let valorBuscar = document.querySelector("#txtBuscarAlumno").value;
         let opcion = document.querySelector("#selectBuscar").value;
-        let resultadoBusqueda = buscarAlumnos(valorBuscar,opcion);
+        let resultadoBusqueda = buscarAlumnos(valorBuscar, opcion);
         cargarTablaAlumnos2(resultadoBusqueda);
         let modal = bootstrap.Modal.getInstance("#modalBuscarAlumno");
         modal.hide();
     }
-    if (e.target.id == "agregarGrupo"){
-        
+    if (e.target.id == "agregarGrupo") {
+
         mostrarArr();
     }
     if (e.target.id == "btnAgregarAlumno") {
-       // debugger
+        // debugger
         let nombre = $("#nombreAlumno").value;
         let apellidos = $("#apellidosAlumno").value;
         let edad = $("#edadAlumno").value;
-        let alumno = new Alumno(nombre,apellidos,edad)       ;
+        let alumno = new Alumno(nombre, apellidos, edad);
         controladorBD.agregarAlumno(alumno);
         cargarTablaAlumnos();
         const modal = $("#modalAgregarAlumno");
@@ -213,8 +222,8 @@ $("body").addEventListener("click", (e) => {
         //debugger
         let idUsuario = parseInt($("#idUsuarioAgregarMateria").value);
         let idMateria = parseInt($("#selectMaterias").value);
-        let calificacion = parseFloat($("#calificacionMateria").value) ;
-        let alumnoMateria = new AlumnoMateria(idUsuario,idMateria, calificacion);
+        let calificacion = parseFloat($("#calificacionMateria").value);
+        let alumnoMateria = new AlumnoMateria(idUsuario, idMateria, calificacion);
         controladorBD.agregarAlumnoMateria(alumnoMateria);
         const instanciaModal = bootstrap.Modal.getInstance($("#modalAgregarMateriaAlumno"));
         instanciaModal.hide();
@@ -231,12 +240,12 @@ function $(selector) {
     return document.querySelector(selector);
 }
 
-let arr = [1,5,65,8,8]
+let arr = [1, 5, 65, 8, 8]
 
-function mostrarArr(){
-    let  html = `<table class="table"><thead><tr><th>valores</th></thead>`;
-    for(let i = 0; i<arr.length;i++ ){
-        html+=`<tr><td>${arr[i]}</td></tr>`
+function mostrarArr() {
+    let html = `<table class="table"><thead><tr><th>valores</th></thead>`;
+    for (let i = 0; i < arr.length; i++) {
+        html += `<tr><td>${arr[i]}</td></tr>`
     }
     html += `</table>`
     console.log(html);
@@ -246,17 +255,17 @@ function mostrarArr(){
 let divtabla = document.querySelector("#tablasDatos");
 divtabla.innerHTML = "<p>hola mundo</p>";
 
-function buscarAlumnos(valorBuscar,opcionBusqueda){
+function buscarAlumnos(valorBuscar, opcionBusqueda) {
     let resultado = [];
 
-    if(opcionBusqueda == "nombre"){
-        controladorBD.baseDatos.tablaAlumnos.forEach( function(alumno){
-            if(alumno.nombre == valorBuscar){
+    if (opcionBusqueda == "nombre") {
+        controladorBD.baseDatos.tablaAlumnos.forEach(function (alumno) {
+            if (alumno.nombre == valorBuscar) {
                 resultado.push(alumno);
             }
         });
     }
-    if(opcionBusqueda == "apellidos"){
+    if (opcionBusqueda == "apellidos") {
         controladorBD.baseDatos.tablaAlumnos.forEach(function (alumno) {
             if (alumno.apellidos == valorBuscar) {
                 resultado.push(alumno);
@@ -323,22 +332,4 @@ function cargarTablaAlumnos2(alumnos) {
     tablaAlumnohtml += `</tbody></table>`;
     //console.log(tablaAlumnohtml)
     tablaContenedor.innerHTML = tablaAlumnohtml;
-}
-function construirTablaObjetosHTML(elementos,nombreColumnas){
-    let tabla = document.createElement("table");
-    tabla.classList.add("table","table-striped", "table-hover");
-    let encabezado = document.createElement("thead");
-    let titulosColumnas = document.createElement("tr");
-    nombreColumnas.forEach(e=>{
-        let th = document.createElement("th");
-        th.textContent = e;
-        titulosColumnas.appendChild(th);
-    })
-    encabezado.appendChild(titulosColumnas);
-    let tbody = document.createElement("tbody");
-    elementos.forEach(e=>{
-        let tr = document.createElement("tr");
-        
-    })
-    
 }
