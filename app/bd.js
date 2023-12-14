@@ -43,8 +43,8 @@ class ManejadorBD {
     eliminarAlumno(id) {
         if (this.baseDatos.tablaAlumnos.get(id)) {
             this.baseDatos.tablaAlumnos.delete(id);
-            this.baseDatos.tablaAlumnoMateria.forEach((valor,clave) =>{
-                if(valor.idAlumno == id){
+            this.baseDatos.tablaAlumnoMateria.forEach((valor, clave) => {
+                if (valor.idAlumno == id) {
                     //console.log(valor)
                     this.baseDatos.tablaAlumnoMateria.delete(clave)
                 }
@@ -76,27 +76,45 @@ class ManejadorBD {
         this.baseDatos.tablaAlumnoMateria.forEach(element => {
             if (element.idAlumno == idAlumno) {
                 //debugger
-                let alumno = this.baseDatos.tablaAlumnos.get(idAlumno);               
+                let alumno = this.baseDatos.tablaAlumnos.get(idAlumno);
                 let materia = this.baseDatos.tablaMaterias.get(element.idMateria);
-               
+
                 alumnoMaterias.push({
                     nombre: alumno.nombre,
                     apellidos: alumno.apellidos,
-                    edad: alumno.edad, 
-                    materia: materia.nombre,  
+                    edad: alumno.edad,
+                    materia: materia.nombre,
                     calificacion: element.calificacion
                 });
             }
         });
-        
+
         return alumnoMaterias;
     }
     agregarGrupo(grupo) {
-        if (this.validador(grupo)) {
+        if (this.validador.validarGrupo(grupo)) {
             grupo.id = this.baseDatos.keyGrupos;
-            this.baseDatos.tablaGrupos.set(grupo.id,grupo);
+            this.baseDatos.tablaGrupos.set(grupo.id, grupo);
             this.baseDatos.keyGrupos++;
         }
+    }
+    agregarAlumnoGrupo(idGrupo, idAlumno) {
+        let grupo = this.baseDatos.tablaGrupos.get(parseInt(idGrupo));
+        let alumno = this.baseDatos.tablaAlumnos.get(parseInt(idAlumno));
+        // debugger
+        grupo.alumnos.push(alumno);
+    }
+    buscarAlumnoEnGrupos(idAlumno) {
+        let grupoAlumno = null;
+        this.baseDatos.tablaGrupos.forEach(grupo => {
+            let alumno = grupo.alumnos.find(alumno => alumno.id == idAlumno)
+            //debugger
+            if (alumno) {
+                grupoAlumno = grupo;
+            }
+        })
+
+        return grupoAlumno;
     }
     guardarBD() {
         console.log(JSON.parse(localStorage("proyectoBD")))
