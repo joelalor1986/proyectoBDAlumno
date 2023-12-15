@@ -52,7 +52,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                         data-bs-target="#modalAgregarGrupo">Agregar</a></li>
-                                <li><a class="dropdown-item" href="#">Ver lista grupos</a></li>
+                                <li><a class="dropdown-item" href="#" id="verListaGrupos">Ver lista grupos</a></li>
 
                             </ul>
 
@@ -224,6 +224,33 @@
         </div>
     </div>
     <!-- fin modal buscar -->
+    <!-- inicio modal crear grupo -->
+    <div id="modalAgregarGrupo" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel2"
+        aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Agregar grupo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="grupoAlumno" class="col-sm-2 col-form-label">Nombre</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="nombreGrupo" class="form-control">
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btnAgregarGrupo">Crear grupo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fin modal crear grupo -->
     <!-- inicio modal asignar grupos -->
     <div id="modalAsignarGrupo" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel2"
         aria-hidden="true">
@@ -238,7 +265,7 @@
                         <label for="grupoAlumno" class="col-sm-2 col-form-label">Grupo</label>
                         <div class="col-sm-10">
                             <select class="form-select" id="selectIdGrupo">
-                            </select>    
+                            </select>
                         </div>
                         <input type="hidden" id="idAlumnoAsignarGrupo">
                     </div>
@@ -252,7 +279,7 @@
         </div>
     </div>
     <!-- fin modal asignar grupos -->
-   
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
