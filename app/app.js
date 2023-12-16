@@ -172,7 +172,7 @@ function agregarMateriaAlumno(idAlumno) {
 }
 function eliminarAlumno(id) {
     controladorBD.eliminarAlumno(id);
-    cargarTablaAlumnos();
+    cargarTablaAlumnos2(controladorBD.baseDatos.tablaAlumnos);
 }
 function eliminarMateria(id) {
     controladorBD.eliminarMateria(id);
@@ -399,7 +399,7 @@ function cargarTablaAlumnos2(alumnos) {
     //console.log(tablaAlumnohtml)
     tablaContenedor.innerHTML = tablaAlumnohtml;
 }
-function eliminarGrupo(idGrupo){
+function eliminarGrupo(idGrupo) {
     controladorBD.eliminarGrupo(idGrupo);
     cargarTablaGrupos(controladorBD.baseDatos.tablaGrupos);
 }
