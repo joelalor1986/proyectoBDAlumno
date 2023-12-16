@@ -1,4 +1,10 @@
 let controladorBD = new ManejadorBD();
+let ordenamiento = {
+    porNombre: "desc",
+    porApellido: "desc",
+    porEdad: "desc",
+    porGrupo: "desc"
+}
 const bd = "proyectoBD";
 if (localStorage.getItem(bd) != null) {
     //debugger
@@ -41,6 +47,22 @@ function guardarBDNavegador() {
     console.log(bdGuardar);
     //debugger
     localStorage.setItem(bd, JSON.stringify(bdGuardar));
+}
+function ordenarAlumnos(campo, sentido) {
+    let alumnos = null;
+    if (campo == "nombre") {
+        alumnos = controladorBD.ordenarAlumnos(campo, sentido);
+        ordenamiento.porNombre = sentido == "asc" ? "desc" : "asc";
+    }
+    if (campo == "apellidos") {
+        alumnos = controladorBD.ordenarAlumnos(campo, sentido);
+        ordenamiento.porApellido = sentido == "asc" ? "desc" : "asc";
+    }
+    if (campo == "edad") {
+        alumnos = controladorBD.ordenarAlumnos(campo, sentido);
+        ordenamiento.porEdad = sentido == "asc" ? "desc" : "asc";
+    }
+    cargarTablaAlumnos2(alumnos);
 }
 function cargarTablaAlumnos() {
     let tablaAlumno = controladorBD.baseDatos.tablaAlumnos;
@@ -258,17 +280,8 @@ function $(selector) {
     return document.querySelector(selector);
 }
 
-let arr = [1, 5, 65, 8, 8]
 
-function mostrarArr() {
-    let html = `<table class="table"><thead><tr><th>valores</th></thead>`;
-    for (let i = 0; i < arr.length; i++) {
-        html += `<tr><td>${arr[i]}</td></tr>`
-    }
-    html += `</table>`
-    console.log(html);
-    $("#tablasDatos").innerHTML = html;
-}
+
 
 let divtabla = document.querySelector("#tablasDatos");
 divtabla.innerHTML = "<p>hola mundo</p>";
@@ -278,14 +291,14 @@ function buscarAlumnos(valorBuscar, opcionBusqueda) {
 
     if (opcionBusqueda == "nombre") {
         controladorBD.baseDatos.tablaAlumnos.forEach(function (alumno) {
-            if (alumno.nombre == valorBuscar) {
+            if (alumno.nombre.includes(valorBuscar)) {
                 resultado.push(alumno);
             }
         });
     }
     if (opcionBusqueda == "apellidos") {
         controladorBD.baseDatos.tablaAlumnos.forEach(function (alumno) {
-            if (alumno.apellidos == valorBuscar) {
+            if (alumno.apellidos.includes(valorBuscar)) {
                 resultado.push(alumno);
             }
         });
@@ -349,10 +362,10 @@ function cargarTablaAlumnos2(alumnos) {
     <thead>
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Apellidos</th>
-      <th scope="col">Edad</th>
-      <th scope="col">Grupo</th>
+      <th scope="col" class="click" onClick=ordenarAlumnos('nombre','${ordenamiento.porNombre}')>Nombre</th>
+      <th scope="col" class="click" onClick=ordenarAlumnos('apellidos','${ordenamiento.porApellido}')>Apellidos</th>
+      <th scope="col" class="click" onClick=ordenarAlumnos('edad','${ordenamiento.porEdad}')>Edad</th>
+      <th scope="col" >Grupo</th>
       <th scope="col">Acciones</th>
     </tr>
   </thead>

@@ -116,13 +116,40 @@ class ManejadorBD {
 
         return grupoAlumno;
     }
-    eliminarGrupo(idGrupo){
-        if(this.baseDatos.tablaGrupos.get(idGrupo)){
+    eliminarGrupo(idGrupo) {
+        if (this.baseDatos.tablaGrupos.get(idGrupo)) {
             this.baseDatos.tablaGrupos.delete(idGrupo);
         }
     }
     guardarBD() {
         console.log(JSON.parse(localStorage("proyectoBD")))
+    }
+    ordenarAlumnos(campo, sentido) {
+        let alumnos = Array.from(this.baseDatos.tablaAlumnos.values());
+        let alumnosOrdenados = null;
+        console.log(alumnos);
+        if (campo == "nombre") {
+            if (sentido == "asc") {
+                alumnosOrdenados = alumnos.sort((a, b) => a.nombre.localeCompare(b.nombre))
+            } else {
+                alumnosOrdenados = alumnos.sort((a, b) => b.nombre.localeCompare(a.nombre))
+            }
+        }
+        if (campo == "apellidos") {
+            if (sentido == "asc") {
+                alumnosOrdenados = alumnos.sort((a, b) => a.apellidos.localeCompare(b.apellidos))
+            } else {
+                alumnosOrdenados = alumnos.sort((a, b) => b.apellidos.localeCompare(a.apellidos))
+            }
+        }
+        if (campo == "edad") {
+            if (sentido == "asc") {
+                alumnosOrdenados = alumnos.sort((a, b) => a.edad - b.edad)
+            } else {
+                alumnosOrdenados = alumnos.sort((a, b) => b.edad - a.edad)
+            }
+        }
+        return alumnosOrdenados;
     }
 }
 class BaseDatos {
@@ -137,6 +164,7 @@ class BaseDatos {
         this.keyAlumnoMateria = 0;
     }
 }
+
 class Validador {
     validarAlumno(alumno) {
         return true;
