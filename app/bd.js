@@ -116,6 +116,11 @@ class ManejadorBD {
 
         return grupoAlumno;
     }
+    eliminarGrupo(idGrupo){
+        if(this.baseDatos.tablaGrupos.get(idGrupo)){
+            this.baseDatos.tablaGrupos.delete(idGrupo);
+        }
+    }
     guardarBD() {
         console.log(JSON.parse(localStorage("proyectoBD")))
     }
