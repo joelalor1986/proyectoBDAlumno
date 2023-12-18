@@ -91,6 +91,31 @@ class ManejadorBD {
 
         return alumnoMaterias;
     }
+    obtenerPromedioGrupo(idGrupo) {
+        let promedio = 0;
+        if (this.baseDatos.tablaGrupos.get(idGrupo)) {
+
+            let grupo = this.baseDatos.tablaGrupos.get(idGrupo);
+
+            let sumaCalificacionAlumos = 0;
+            grupo.alumnos.forEach(alumno => {
+                sumaCalificacionAlumos += this.obtenerCalificacionAlumo(alumno.id)
+            })
+            console.log(sumaCalificacionAlumos)
+            promedio = sumaCalificacionAlumos / grupo.alumnos.length;
+
+        }
+        return Math.round(promedio * 100) / 100;
+    }
+    obtenerCalificacionAlumo(idAlumno) {
+        if (this.baseDatos.tablaAlumnos.get(idAlumno)) {
+            let alumnoMaterias = this.consultarAlumnoMateria(idAlumno);
+            let promedio = alumnoMaterias.reduce((acumulador, actual) => acumulador + actual.calificacion, 0) / alumnoMaterias.length;
+
+            return Math.round(promedio * 100) / 100;;
+        }
+        return 0;
+    }
     agregarGrupo(grupo) {
         if (this.validador.validarGrupo(grupo)) {
             grupo.id = this.baseDatos.keyGrupos;

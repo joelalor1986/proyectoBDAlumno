@@ -147,7 +147,7 @@ function cargarTablaMaterias() {
 }
 function cargarTablaMateriasAlumno(idAlumno) {
     let alumnoMaterias = controladorBD.consultarAlumnoMateria(idAlumno);
-    let promedio = alumnoMaterias.reduce((suma, calificacion) => suma + calificacion.calificacion, 0) / alumnoMaterias.length;
+    let promedio = controladorBD.obtenerCalificacionAlumo(idAlumno);
     let tablaAlumnohtml = `<table class="table table table-striped table-hover">
     
     <thead>
@@ -321,6 +321,8 @@ function cargarTablaGrupos(grupos) {
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Nombre</th>
+      <th scope="col">alumnos</th>
+      <th scope="col">Promedio</th>
       <th scope="col">Acciones</th>
     </tr>
   </thead>
@@ -330,6 +332,8 @@ function cargarTablaGrupos(grupos) {
         tablaHtml += `<tr>
             <td>${grupo.id}</td>
             <td>${grupo.nombre}</td>
+            <td>${grupo.alumnos.length}</td>
+            <td>${controladorBD.obtenerPromedioGrupo(grupo.id)}</td>
             <td>
         
                 </button>
@@ -365,6 +369,7 @@ function cargarTablaAlumnos2(alumnos) {
       <th scope="col" class="click" onClick=ordenarAlumnos('nombre','${ordenamiento.porNombre}')>Nombre</th>
       <th scope="col" class="click" onClick=ordenarAlumnos('apellidos','${ordenamiento.porApellido}')>Apellidos</th>
       <th scope="col" class="click" onClick=ordenarAlumnos('edad','${ordenamiento.porEdad}')>Edad</th>
+      <th scope="col" >Promedio</th>
       <th scope="col" >Grupo</th>
       <th scope="col">Acciones</th>
     </tr>
@@ -383,9 +388,10 @@ function cargarTablaAlumnos2(alumnos) {
             <td>${alumno.nombre}</td>
             <td>${alumno.apellidos}</td>
             <td>${alumno.edad}</td>
+            <td>${controladorBD.obtenerCalificacionAlumo(alumno.id)}</td>
             <td>${grupo ? grupo.nombre : "sin grupo"}  </td>
             <td>
-              <div class=class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+              <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
               ${grupo ? '' : botonAsignarGrupo}   
               
                 <button type="button" class="btn btn-primary" onClick=agregarMateriaAlumno(${alumno.id}) title="Agregar materias" dat-bs-toggle="modal" data-bs-target="#modalAgregarMateriaAlumno"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
