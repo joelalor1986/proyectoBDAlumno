@@ -105,14 +105,16 @@ class ManejadorBD {
             promedio = sumaCalificacionAlumos / grupo.alumnos.length;
 
         }
-        return Math.round(promedio * 100) / 100;
+        promedio = Math.round(promedio * 100) / 100;
+        return promedio ? promedio : 0;
     }
     obtenerCalificacionAlumo(idAlumno) {
         if (this.baseDatos.tablaAlumnos.get(idAlumno)) {
+
             let alumnoMaterias = this.consultarAlumnoMateria(idAlumno);
             let promedio = alumnoMaterias.reduce((acumulador, actual) => acumulador + actual.calificacion, 0) / alumnoMaterias.length;
-
-            return Math.round(promedio * 100) / 100;;
+            promedio = Math.round(promedio * 100) / 100;
+            return promedio ? promedio : 0;
         }
         return 0;
     }
